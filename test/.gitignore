@@ -1,0 +1,5 @@
+image_sampler.jar
+apache-tomcat*.zip
+tomcat/
+/*.IMG
+output.txt

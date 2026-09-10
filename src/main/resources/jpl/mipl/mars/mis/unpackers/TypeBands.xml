@@ -1,0 +1,727 @@
+<?xml version="1.0"?>
+<!-- 
+    *   Purpose:
+    *   Provide band names for trivial band unpack cases and handlers for others
+    *   @author= Nolan Miller
+-->
+
+<image_type_bands>
+    <image_id type="basic" name="disparity">
+        <bands length="2" type="array">
+            <value>line</value>
+            <value>sample</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="xyz">
+        <bands length="3" type="array">
+            <value>x</value>
+            <value>y</value>
+            <value>z</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="xyz_masked">
+        <bands length="3" type="array">
+            <value>x</value>
+            <value>y</value>
+            <value>z</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="xxx">
+        <bands length="1" type="array">
+            <value>x</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="yyy">
+        <bands length="1" type="array">
+            <value>y</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="zzz">
+        <bands length="1" type="array">
+            <value>z</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="normalSingle">
+        <bands length="1" type="array">
+            <value>normal</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="range">
+        <bands length="1" type="array">
+            <value>range</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="normal">
+        <bands length="3" type="array">
+            <value>u</value>
+            <value>v</value>
+            <value>w</value>
+        </bands>
+    </image_id>
+    
+    <image_id type="basic" name="roughness">
+        <bands length="1" type="array">
+            <value>rough</value>
+        </bands>
+    </image_id>
+
+    <image_id type="complex" name="reachability">
+        <class>jpl.mipl.mars.mis.unpackers.ReachabilityUnpacker</class>
+    </image_id>
+    <image_id type="complex" name="arm_reachability">
+        <class>jpl.mipl.mars.mis.unpackers.ArmReachabilityUnpacker</class>
+    </image_id>
+    <image_id type="complex" name="arm_preload">
+        <class>jpl.mipl.mars.mis.unpackers.ArmPreloadUnpacker</class>
+    </image_id>
+    <image_id type="basic" name="arm_drill_roughness">
+        <bands length="3" type="array">
+            <value>state</value>
+            <value>overall</value>
+            <value>ring</value>
+        </bands>
+        <bands length="2" type="array">
+            <value>state</value>
+            <value>overall</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="arm_drt_roughness">
+        <bands length="3" type="array">
+            <value>state</value>
+            <value>overall</value>
+            <value>ring</value>
+        </bands>
+        <bands length="2" type="array">
+            <value>state</value>
+            <value>overall</value>
+        </bands>
+    </image_id>
+    
+    <image_id type="basic" name="mask">
+        <bands length="1" type="array" prefix="mask">  
+            <value>mask</value>          
+        </bands>   
+        <bands length="*" type="array" prefix="mask">            
+        </bands>
+    </image_id>
+    
+    <image_id type="basic" name="iep">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="iff">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="edr">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="slope">
+        <bands length="1" type="array">
+            <value>slope</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="disparitySingleLine">
+        <bands length="1" type="array">
+            <value>line</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="disparitySingleSample">
+        <bands length="1" type="array">
+            <value>sample</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="slope_rover">
+        <bands length="1" type="array">
+            <value>slope</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="slope_magnitude">
+        <bands length="1" type="array">
+            <value>slope_magnitude</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="slope_heading">
+        <bands length="1" type="array">
+            <value>slope_heading</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="solar_energy">
+        <bands length="1" type="array">
+            <value>energy</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="slope_northerly_tilt">
+        <bands length="1" type="array">
+            <value>tilt</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="normal_to_plane_angle">
+        <bands length="3" type="array">
+            <value>u</value>
+            <value>v</value>
+            <value>w</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="radiometric_corrected">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="inverse_lookup_table">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="video_image">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+    </image_id>
+    <image_id type="basic" name="depth_map_image">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="mmm_image_8">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="mmm_image_12">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="mmm_image_16">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="error">
+        <bands length="1" type="array">
+            <value>error</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="range_error">
+        <bands length="1" type="array">
+            <value>error</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>Downrange-Error</value>
+            <value>Crossrange-H-Error</value>
+            <value>Crossrange-V-Error</value>
+        </bands>
+    </image_id>
+
+    <image_id type="basic" name="xyz_error">
+        <bands length="1" type="array">
+            <value>error</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>X-Error</value>
+            <value>Y-Error</value>
+            <value>Z-Error</value>
+        </bands>
+    </image_id>
+
+    <image_id type="basic" name="xyz_volumetric_error">
+        <bands length="1" type="array">
+            <value>error</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="range_volumetric_error">
+        <bands length="1" type="array">
+            <value>error</value>
+        </bands>
+
+    </image_id>
+    <image_id type="basic" name="range_error_magnitude">
+        <bands length="1" type="array">
+            <value>error_mag</value>
+        </bands>
+    </image_id>
+    
+    <image_id type="basic" name="color_rgb">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+    </image_id>
+    
+    <image_id type="basic" name="color_rgb_12bit">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+    </image_id>
+    
+    <image_id type="basic" name="color_rgb_15bit">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+    </image_id>
+    
+    <image_id type="basic" name="color_rgb_overlayable">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+    </image_id>
+    
+    <image_id type="basic" name="image_norescale">
+        <bands length="1" type="array">
+            <value>dn</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>r</value>
+            <value>g</value>
+            <value>b</value>
+        </bands>
+    </image_id>
+    
+    
+    <image_id type="basic" name="index_coord_map">
+        <bands length="2" type="array">
+            <value>line</value>
+            <value>sample</value>
+        </bands>
+    </image_id>
+    
+    
+    <image_id type="basic" name="index_downsample">
+        <bands length="1" type="array">
+            <value>downsample</value>
+        </bands>
+    </image_id>
+    
+
+    
+    <!-- Basic Lookup types which translate int values to
+         string names -->
+    
+    
+    <image_id type="basiclookup" name="workspace_hp3">
+        <bands length="1" type="array">
+            <value>workspace</value>
+        </bands>
+        <lookup bands="{}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Outside Boundary" />
+            <entry key="2" value="Footplane Boundary" />
+            <entry key="4" value="Grapple Workspace-Kinematic" />
+            <entry key="5" value="Grapple Workspace-Nominal" />
+            <entry key="6" value="Grapple Workspace-Occluded" />
+            <entry key="7" value="Grapple Workspace-Maneuver" />                     
+        </lookup>
+    </image_id>
+    
+    <image_id type="basiclookup" name="workspace_seiswts">
+        <bands length="1" type="array">
+            <value>workspace</value>
+        </bands>
+        <lookup bands="{}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Outside Boundaries" />
+            <entry key="2" value="WTS Footplane" />
+            <entry key="3" value="SEIS Footplane" />
+            <entry key="4" value="Grapple Workspace-Kinematic" />
+            <entry key="5" value="Grapple Workspace-Nominal" />
+            <entry key="6" value="Grapple Workspace-Occluded" />
+            <entry key="7" value="Grapple Workspace-Maneuver" />
+        </lookup>
+    </image_id>
+    
+    <image_id type="basiclookup" name="goodness_hp3">
+        <bands length="1" type="array">
+            <value>goodness</value>
+        </bands>
+        <lookup bands="{}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Multiple Bad" />
+            <entry key="2" value="Bad Roughness" />
+            <entry key="3" value="Bad Tilt" />
+            <entry key="5" value="All Good" />
+        </lookup>
+    </image_id>
+    
+    
+    <image_id type="basiclookup" name="goodness_seiswts">
+        <bands length="1" type="array">
+            <value>goodness</value>
+        </bands>
+        <lookup bands="{}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Multiple Bad" />
+            <entry key="2" value="Bad Roughness" />
+            <entry key="3" value="Bad Tilt" />
+            <entry key="4" value="Bad Delta Tilt" />
+            <entry key="5" value="All Good" />                     
+        </lookup>
+    </image_id>
+    
+    
+    <image_id type="basiclookup" name="nsyt_roughness">
+        <bands length="3" type="array">
+            <value>goodness</value>
+            <value>footplane</value>
+            <value>footpatch</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Exceeds multiple" />
+            <entry key="2" value="Exceeds footplane" />
+            <entry key="3" value="Exceeds footpatch" />
+            <entry key="4" value="Exceeds skirt limit" />
+            <entry key="5" value="Within all limits" />
+        </lookup>
+    </image_id>
+     
+     
+    <image_id type="basiclookup" name="nsyt_tilt">
+        <bands length="3" type="array">
+            <value>goodness</value>
+            <value>minimum</value>
+            <value>maximum</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Value" />
+            <entry key="3" value="Exceeds threshold" />
+            <entry key="5" value="Within all limits" />
+        </lookup>
+    </image_id>
+
+
+    <!-- Updated again to support Terrain products v3 and onward (Oct 2020) -->
+    <image_id type="basiclookup" name="terrain_class">
+        <bands length="2" type="array">
+            <value>terrain</value>
+            <value>confidence</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0"   value="None" />
+            <entry key="1"   value="Sand" />
+            <entry key="2"   value="Small Rocks" />
+            <entry key="3"   value="Bedrock" />
+            <entry key="4"   value="Large Rocks" />
+            <entry key="5"   value="Outcrop" />
+            <entry key="6"   value="Wheel tracks" />
+            <entry key="7"   value="terrain07" />
+            <entry key="8"   value="terrain08" />
+            <entry key="9"   value="terrain09" />
+            <entry key="10"  value="terrain10"   />
+            <entry key="11"  value="terrain11"  />
+            <entry key="255" value="None" />
+        </lookup>
+    </image_id>
+    
+    <!-- Updated to support Terrain products v2.1 and onward -->
+    <image_id type="basic" name="terrain_class_confidence">
+        <bands length="*" type="array" prefix="confidence" >
+            <value>"None"</value>
+            <value>"Sand"</value>
+            <value>"Small Rocks"</value>
+            <value>"Bedrock"</value>
+            <value>"Large Rocks"</value>
+            <value>"Outcrop"</value>
+            <value>"Wheel tracks"</value>
+        </bands>       
+    </image_id>
+    
+    <image_id type="basiclookup" name="chemcam_finder_mask">
+        <bands length="1" type="array">
+            <value>mask</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="None" />
+            <entry key="1" value="Exclusion Only" />
+            <entry key="2" value="Risk" />
+            <entry key="3" value="Exclusion" />
+        </lookup>
+    </image_id>
+
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+
+    <image_id type="basiclookup" name="arm_goodness_rough_abrade">
+        <bands length="1" type="array"> 
+            <value>Roughness</value>
+        </bands>
+        <bands length="2" type="array"> <!-- deprecated per MIV3.5.10 -->
+            <value>Roughness</value>
+            <value>Configuration</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>Status</value>
+            <value>Abrade Rough</value>
+            <value>FCS Rough</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Abrade+FCS Issue" />
+            <entry key="2" value="Abrade Issue" />
+            <entry key="3" value="FCS Issue" />
+            <entry key="4" value="Abrade+FCS OK" />
+        </lookup>
+    </image_id>
+
+    <image_id type="basiclookup" name="arm_goodness_rough_drillstabilzer">
+        <bands length="1" type="array">
+            <value>Roughness</value>
+        </bands>
+        <bands length="2" type="array"> <!-- deprecated per MIV3.5.10 -->
+            <value>Roughness</value>
+            <value>Configuration</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>Status</value>
+            <value>Coring Rough</value>
+            <value>Stabilizer Rough</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Core+Stab Issue" />
+            <entry key="2" value="Core Patch Issue" />
+            <entry key="3" value="Stab Ring Issue" />
+            <entry key="4" value="Core+Stab Ring OK" />
+        </lookup>
+    </image_id>
+
+    <image_id type="basiclookup" name="arm_goodness_rough_drillcurvature">
+        <bands length="1" type="array">
+            <value>Roughness</value>
+        </bands>
+        <bands length="2" type="array"> <!-- deprecated per MIV3.5.10 -->
+            <value>Roughness</value>
+            <value>Configuration</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>Status</value>
+            <value>Concavity</value>
+            <value>Convexity</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Concave+Convex Issue" />
+            <entry key="2" value="Convexity Issue," />
+            <entry key="3" value="Concavity Issue" />
+            <entry key="4" value="4" />
+            <entry key="5" value="Abrade OK" />
+            <entry key="6" value="Core+Abrade OK" />
+        </lookup>
+    </image_id>
+
+    <image_id type="basiclookup" name="arm_goodness_surface_m20">
+        <bands length="1" type="array">
+            <value>Surface</value>
+        </bands>
+        <bands length="2" type="array"> <!-- deprecated per MIV3.5.10 -->
+            <value>Surface</value>
+            <value>Configuration</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Abrade+Stab Issue" />
+            <entry key="2" value="Abrade Patch Issue" />
+            <entry key="3" value="Stab Ring Issue" />
+            <entry key="4" value="4" />
+            <entry key="5" value="Abrade+Stab OK" />
+        </lookup>
+    </image_id>
+
+    <image_id type="armconfiglookup" name="arm_goodness_reach_m20">
+        <bands length="1" type="array">
+            <value>Reachability</value>
+        </bands>
+        <bands length="2" type="array">
+            <value>Reachability</value>
+            <value>Configuration</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="IK+Collision Issue" />
+            <entry key="1" value="IK Issue" />
+            <entry key="2" value="2" />
+            <entry key="3" value="Collision Issue" />
+            <entry key="4" value="4" />
+            <entry key="5" value="Reachable All Tools" />
+        </lookup>
+    </image_id>
+
+
+    <image_id type="basiclookup" name="heli_goodness_slope">
+        <bands length="1" type="array">
+            <value>Slope</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="GT 6 degrees" />
+            <entry key="2" value="2" />
+            <entry key="3" value="LE 6 degrees" />
+            <entry key="4" value="4" />
+            <entry key="5" value="LT 5 degrees" />
+        </lookup>
+    </image_id>
+
+    <!-- Deprecated as of MIV 3.5.10: arm_goodness_reach_m20 -->
+    <!-- Reason: we had to break it up into two different types -->
+    <image_id type="basiclookup" name="arm_goodness_overall_m20">
+        <bands length="1" type="array">
+            <value>Goodness</value>
+        </bands>
+        <bands length="2" type="array">
+            <value>Goodness</value>
+            <value>Measurement</value>
+        </bands>
+        <bands length="3" type="array">
+            <value>Goodness</value>
+            <value>Measurement 1</value>
+            <value>Measurement 2</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Multiple Bad" />
+            <entry key="2" value="Bad Reach" />
+            <entry key="3" value="Bad Rough/Curve" />
+            <entry key="4" value="4" />
+            <entry key="5" value="All Good" />
+        </lookup>
+    </image_id>
+
+    <image_id type="basiclookup" name="arm_goodness_overall_m20_abrade_core">
+        <bands length="1" type="array">
+            <value>Goodness</value>
+        </bands>
+        <bands length="2" type="array">
+            <value>Goodness</value>
+            <value>Configuration</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Reach+Topo Issue" />
+            <entry key="2" value="Reachability Issue" />
+            <entry key="3" value="Topography Issue" />
+            <entry key="4" value="4" />
+            <entry key="5" value="Reach+Topo OK" />
+        </lookup>
+    </image_id>
+
+    <image_id type="basiclookup" name="arm_goodness_overall_m20_natural">
+        <bands length="1" type="array">
+            <value>Goodness</value>
+        </bands>
+        <bands length="2" type="array">
+            <value>Goodness</value>
+            <value>Configuration</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Reach+Rough Issue" />
+            <entry key="2" value="Reachability Issue" />
+            <entry key="3" value="Roughness Issue" />
+            <entry key="4" value="4" />
+            <entry key="5" value="Reach+Rough OK" />
+        </lookup>
+    </image_id>
+
+    <image_id type="basiclookup" name="arm_goodness_overall_heli">
+        <bands length="1" type="array">
+            <value>Roughness</value>
+        </bands>
+        <bands length="2" type="array">
+            <value>Roughness</value>
+            <value>Configuration</value>
+        </bands>
+        <lookup bands="{0}">
+            <entry key="0" value="No Data" />
+            <entry key="1" value="Multiple Bad" />
+            <entry key="2" value="Tilt Bad" />
+            <entry key="3" value="Rough Bad" />
+            <entry key="4" value="Slope Bad" />
+            <entry key="5" value="All Good" />
+        </lookup>
+    </image_id>
+
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+
+
+    
+</image_type_bands>

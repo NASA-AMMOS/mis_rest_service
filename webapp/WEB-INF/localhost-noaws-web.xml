@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app>
+  <servlet>
+    <servlet-name>MISService</servlet-name>
+    <servlet-class>jpl.mipl.mars.mis.MISService</servlet-class>
+    <init-param>
+      <param-name>debug_sampler</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>enable_s3</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <init-param>
+      <param-name>enable_http</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>rdr_url_whitelist_patterns</param-name>
+      <param-value></param-value>
+    </init-param>
+    <init-param>
+      <param-name>fs_input_dir</param-name>
+      <param-value>test</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ignore_subdirs</param-name>
+      <param-value>ids-pipeline,browse,orbital</param-value>
+    </init-param>
+    <init-param>
+      <param-name>surface_histogram_bin_width</param-name>
+      <param-value>0.001</param-value>
+    </init-param>
+    <init-param>
+      <param-name>surface_histogram_max_bins</param-name>
+      <param-value>10000</param-value>
+    </init-param>
+    <init-param>
+      <param-name>max_cached_samples</param-name>
+      <param-value>1000000</param-value>
+    </init-param>
+    <init-param>
+      <param-name>max_cached_record_bytes</param-name>
+      <param-value>10000000</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MISService</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+</web-app>

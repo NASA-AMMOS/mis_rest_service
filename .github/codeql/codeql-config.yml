@@ -1,0 +1,35 @@
+name: "CodeQL Security Scan Configuration"
+
+# Keep the default query suite and add the extended security queries.
+disable-default-queries: false
+
+queries:
+  - uses: security-extended
+
+# Scope note: mis_rest_service is a small Java servlet + CLI that samples pixel
+# values out of VICAR images. All of our code lives under src/main/java. There
+# is no vendored third-party Java in this repo, and no JUnit suite -- test/ is
+# shell scripts that drive the built artifacts.
+#
+# This database is built with `build-mode: none` (see security-scan.yml): the
+# JPL-internal `mars` dependency is not publicly resolvable, so CI cannot
+# compile. CodeQL therefore analyzes source without resolved types, which costs
+# some precision on dataflow through library calls.
+paths-ignore:
+  # Build output.
+  - 'target/**'
+
+  # Not code we wrote, or not code at all.
+  - 'docs/**'
+  - 'scripts/**'                # pandoc/LaTeX helpers for building the PDF docs
+  - 'webapp/resources/**'       # static assets served by the servlet
+  - '**/*.min.js'
+
+  # Shell-driven smoke tests, not shipped.
+  - 'test/**'
+
+query-filters:
+  # Style and maintainability suggestions add volume without adding security
+  # signal; SonarQube already covers that ground.
+  - exclude:
+      problem.severity: recommendation

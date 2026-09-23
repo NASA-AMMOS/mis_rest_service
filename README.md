@@ -236,3 +236,9 @@ Note on default values: the defaults described here refer to the defaults in the
 * `surface_histogram_max_bins`: Defaults to 10000.  Maximum number of bins in each half of the histogram returned by spatial volume queries with `surface=PLANE`.
 * `max_cached_samples`: Defaults to 1000000.  Maximum number of samples to cache.  Here a "sample" is represented as an 8 byte double precision DN value for a given line, sample, and band.  Each query that the server is currently serving has a separate LRU sample cache.  Sample caching can be helpful for explicity batch queries, particularly if interpolation is enabled and adjacent pixels are requested.  Sample caching is not used for volume queries.
 * `max_cached_record_bytes`: Defaults to 10000000.  Maximum number of bytes to cache for full records.  Here a "record" is an array of the raw DN values for one line of one band.  E.g. if if the image width is 1000 and there are 2 bytes per sample then the default setting will allow up to 10000000 / 2000 = 5000 records to be cached, or 5000 / 3 = 1666 full lines of pixels for a 3 band image.  Each query that the server is currently serving has a separate LRU record cache.  Record caching can be helpful for batch queries on a compressed source RDR because VICAR compression is per-line and the cached records contain the decompressed data.  Record caching is also used, if enabled, for all volume queries.  In that case the entire record cache is repeatedly filled with the maximum possible number of lines from the source file to minimize the number of S3 read transactions, since the whole file must be read for each volume query.
+
+# License
+
+Copyright (c) 2026 California Institute of Technology ("Caltech"). U.S. Government sponsorship acknowledged.
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full text.

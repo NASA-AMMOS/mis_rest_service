@@ -40,6 +40,8 @@
         <version.javax.json>1.1.4</version.javax.json>
         <version.aws-java-v2-bom>2.42.19</version.aws-java-v2-bom>
         <version.mars>3.8.2-SNAPSHOT</version.mars>
+        <!-- vicario is open source (https://github.com/NASA-AMMOS/vicario) and published to Maven Central -->
+        <version.vicario>2.7.2</version.vicario>
         <version.tomcat-catalina>9.0.50</version.tomcat-catalina>
 
     </properties>
@@ -268,6 +270,12 @@
                 <version>${version.aws-java-v2-bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- vicario comes in transitively through mars; pin it to the Maven Central release -->
+            <dependency>
+                <groupId>gov.nasa.jpl.ammos.ids</groupId>
+                <artifactId>vicario</artifactId>
+                <version>${version.vicario}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

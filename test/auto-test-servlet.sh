@@ -93,4 +93,28 @@ test_json "?url=$base/$f&sphere=-7,0,0,0.8" "[[-7.01116943359375,0.1890264153480
 test_json "?url=$base/$f&sphere=-7,0,0,0.8&plane=0,0,1,0.76" "[[-6.916011810302734,0.23899881541728973,0.758683979511261]]"
 test_json "?url=$base/$f&sphere=-7,0,0,0.8&surface=0,0,1,0.76" "{\"num_points\":14,\"min_distance\":-0.0013160204887390226,\"max_distance\":0.01964448928833007,\"histogram_bin_width\":0.001,\"histogram_outliers_below\":0.0,\"histogram_outliers_above\":0.0,\"histogram_below\":[0,1],\"histogram_above\":[1,0,1,0,0,0,0,2,0,1,0,1,2,0,0,0,2,2,0,1]}"
 
+#SSRF filter: image URLs on non-public hosts are rejected with 400
+#URLs are percent encoded, also [] would otherwise be interpreted by curl as globs
+test_fail "?url=http%3A%2F%2Flocalhost%3A8080%2Fx.IMG&line=1&sample=1" 400  #http://localhost:8080/x.IMG
+test_fail "?url=http%3A%2F%2FLOCALHOST.%3A8080%2Fx.IMG&line=1&sample=1" 400 #http://LOCALHOST.:8080/x.IMG
+test_fail "?url=http%3A%2F%2Ffoo.localhost%2Fx.IMG&line=1&sample=1" 400     #http://foo.localhost/x.IMG
+test_fail "?url=http%3A%2F%2F127.0.0.1%3A8080%2Fx.IMG&line=1&sample=1" 400  #http://127.0.0.1:8080/x.IMG
+test_fail "?url=http%3A%2F%2F127.1%2Fx.IMG&line=1&sample=1" 400             #http://127.1/x.IMG
+test_fail "?url=http%3A%2F%2F2130706433%2Fx.IMG&line=1&sample=1" 400        #http://2130706433/x.IMG (127.0.0.1)
+test_fail "?url=http%3A%2F%2F0.0.0.0%2Fx.IMG&line=1&sample=1" 400           #http://0.0.0.0/x.IMG
+test_fail "?url=http%3A%2F%2F10.1.2.3%2Fx.IMG&line=1&sample=1" 400          #http://10.1.2.3/x.IMG
+test_fail "?url=http%3A%2F%2F172.16.0.1%2Fx.IMG&line=1&sample=1" 400        #http://172.16.0.1/x.IMG
+test_fail "?url=http%3A%2F%2F192.168.1.1%2Fx.IMG&line=1&sample=1" 400       #http://192.168.1.1/x.IMG
+test_fail "?url=http%3A%2F%2F100.100.100.200%2Fx.IMG&line=1&sample=1" 400   #http://100.100.100.200/x.IMG (CGNAT)
+test_fail "?url=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2Fx.IMG&line=1&sample=1" 400 #http://169.254.169.254/latest/meta-data/x.IMG
+test_fail "?url=http%3A%2F%2Fmetadata.google.internal%2Fx.IMG&line=1&sample=1" 400 #http://metadata.google.internal/x.IMG
+test_fail "?url=http%3A%2F%2Fexample.com%40127.0.0.1%2Fx.IMG&line=1&sample=1" 400  #http://example.com@127.0.0.1/x.IMG
+test_fail "?url=http%3A%2F%2F%5B%3A%3A1%5D%3A8080%2Fx.IMG&line=1&sample=1" 400     #http://[::1]:8080/x.IMG
+test_fail "?url=http%3A%2F%2F%5Bfe80%3A%3A1%5D%2Fx.IMG&line=1&sample=1" 400         #http://[fe80::1]/x.IMG
+test_fail "?url=http%3A%2F%2F%5Bfd00%3Aec2%3A%3A254%5D%2Fx.IMG&line=1&sample=1" 400 #http://[fd00:ec2::254]/x.IMG (AWS IPv6 metadata)
+test_fail "?url=http%3A%2F%2F%5B%3A%3Affff%3A169.254.169.254%5D%2Fx.IMG&line=1&sample=1" 400 #http://[::ffff:169.254.169.254]/x.IMG
+test_fail "?url=http%3A%2F%2F%5B64%3Aff9b%3A%3Aa9fe%3Aa9fe%5D%2Fx.IMG&line=1&sample=1" 400 #http://[64:ff9b::a9fe:a9fe]/x.IMG (NAT64)
+test_fail "?url=http%3A%2F%2F%5B2002%3Aa9fe%3Aa9fe%3A%3A%5D%2Fx.IMG&line=1&sample=1" 400 #http://[2002:a9fe:a9fe::]/x.IMG (6to4)
+test_fail "?url=http%3A%2F%2Fno-such-host.invalid%2Fx.IMG&line=1&sample=1" 400  #http://no-such-host.invalid/x.IMG
+
 echo "SUCCESS"

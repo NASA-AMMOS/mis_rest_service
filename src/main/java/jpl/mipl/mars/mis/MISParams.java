@@ -30,11 +30,23 @@ public abstract class MISParams {
     public String pfx;
 
     public static boolean hasExt(String url, String[] exts) {
-        int lastDot = url.lastIndexOf('.');
-        if (lastDot >= 0 && lastDot < url.length() - 1) {
-            String ext = url.substring(lastDot + 1).toLowerCase();
+        int pathEnd = url.length();
+        int queryIdx = url.indexOf('?');
+        if (queryIdx >= 0) {
+            pathEnd = Math.min(pathEnd, queryIdx);
+        }
+        int fragmentIdx = url.indexOf('#');
+        if (fragmentIdx >= 0) {
+            pathEnd = Math.min(pathEnd, fragmentIdx);
+        }
+        String path = url.substring(0, pathEnd);
+        int lastSeparator = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
+        String lastSegment = path.substring(lastSeparator + 1);
+        int lastDot = lastSegment.lastIndexOf('.');
+        if (lastDot >= 0 && lastDot < lastSegment.length() - 1) {
+            String ext = lastSegment.substring(lastDot + 1).toLowerCase();
             for (int i = 0; i < exts.length; i++) {
-                if (ext.equals(exts[i])) {
+                if (exts[i] != null && exts[i].length() > 0 && ext.equals(exts[i].toLowerCase())) {
                     return true;
                 }
             }
@@ -44,6 +56,10 @@ public abstract class MISParams {
 
     public static boolean checkUrl(String url) {
         if (url.contains("../")) { //avoid tricks like ../../../pwned
+            return false;
+        }
+        //SSRF filter; HTTPHelper also checks every connection it makes, including redirects
+        if (HTTPHelper.isHTTPUrl(url) && !HTTPHelper.isSafeUrl(url)) {
             return false;
         }
         if (MISTask.rdrUrlWhitelistPatterns != null && MISTask.rdrUrlWhitelistPatterns.length > 0) {

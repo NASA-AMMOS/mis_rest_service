@@ -2,6 +2,8 @@ package jpl.mipl.mars.mis;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.nio.file.InvalidPathException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,6 +31,12 @@ public abstract class MISParams {
 
     public String pfx;
 
+    //true when inputs come from a trusted user, e.g. the CLI, rather than from untrusted remote requests
+    //this skips the checks that only exist to constrain the REST service: the requirement that http[s] URLs be
+    //whitelisted, and the rejection of absolute local paths (the CLI has no fs_input_dir)
+    //the SSRF filter is still applied
+    public static volatile boolean trustedInput = false;
+
     public static boolean hasExt(String url, String[] exts) {
         int pathEnd = url.length();
         int queryIdx = url.indexOf('?');
@@ -55,13 +63,29 @@ public abstract class MISParams {
     }
 
     public static boolean checkUrl(String url) {
+
         if (url.contains("../")) { //avoid tricks like ../../../pwned
             return false;
         }
-        //SSRF filter; HTTPHelper also checks every connection it makes, including redirects
-        if (HTTPHelper.isHTTPUrl(url) && !HTTPHelper.isSafeUrl(url)) {
-            return false;
+
+        boolean isHTTP = HTTPHelper.isHTTPUrl(url);
+        boolean isS3 = S3Helper.isS3Url(url);
+
+        //S3 URLs, including http[s]://BUCKET.s3-REGION.amazonaws.com/KEY, are read by the S3 client, not HTTPHelper,
+        //and with a PrivateLink interface endpoint their hostnames legitimately resolve to private addresses
+        if (isHTTP && !isS3) {
+
+            //SSRF filter; HTTPHelper also checks every connection it makes, including redirects
+            if (!HTTPHelper.isSafeUrl(url)) {
+                return false;
+            }
+
+            if (!trustedInput &&
+                (MISTask.rdrUrlWhitelistPatterns == null || MISTask.rdrUrlWhitelistPatterns.length == 0)) {
+                return false; //only allow whitelisted http[s] RDR URLs
+            }
         }
+
         if (MISTask.rdrUrlWhitelistPatterns != null && MISTask.rdrUrlWhitelistPatterns.length > 0) {
             boolean ok = false;
             for (int i = 0; i < MISTask.rdrUrlWhitelistPatterns.length; i++) {
@@ -72,6 +96,21 @@ public abstract class MISParams {
             }
             if (!ok) return false;
         }
+
+        //local paths are always resolved relative to fs_input_dir, reject absolute paths to avoid confusion
+        //check for leading / explicitly because e.g. /etc/passwd is not absolute on Windows
+        //strip file:// first like SparseImage.getLocalPath() so e.g. file:///etc/passwd is also caught
+        if (!trustedInput && !isHTTP && !isS3) {
+            String path = url.toLowerCase().startsWith("file://") ? url.substring(7) : url;
+            try {
+                if (path.startsWith("/") || Paths.get(path).isAbsolute()) {
+                    return false;
+                }
+            } catch (InvalidPathException ex) { //e.g. NUL character
+                return false;
+            }
+        }
+
         if (MISTask.ignoreSubdirs != null) {
             for (int i = 0; i < MISTask.ignoreSubdirs.length; i++) {
                 if (url.contains("/" + MISTask.ignoreSubdirs[i] + "/")) {

@@ -93,6 +93,16 @@ test_json "?url=$base/$f&sphere=-7,0,0,0.8" "[[-7.01116943359375,0.1890264153480
 test_json "?url=$base/$f&sphere=-7,0,0,0.8&plane=0,0,1,0.76" "[[-6.916011810302734,0.23899881541728973,0.758683979511261]]"
 test_json "?url=$base/$f&sphere=-7,0,0,0.8&surface=0,0,1,0.76" "{\"num_points\":14,\"min_distance\":-0.0013160204887390226,\"max_distance\":0.01964448928833007,\"histogram_bin_width\":0.001,\"histogram_outliers_below\":0.0,\"histogram_outliers_above\":0.0,\"histogram_below\":[0,1],\"histogram_above\":[1,0,1,0,0,0,0,2,0,1,0,1,2,0,0,0,2,2,0,1]}"
 
+#RDR URL whitelist: localhost-noaws-web.xml allows only http[s] URLs and local paths with no colon, optionally file://
+test_fail "?url=ftp%3A%2F%2Fexample.com%2Fx.IMG&line=1&sample=1" 400               #ftp://example.com/x.IMG
+
+#absolute local paths are rejected with 400, with or without file://, whether or not the file exists
+#if they were instead resolved relative to fs_input_dir these would be 404
+test_fail "?url=%2Fetc%2Fpasswd.IMG&line=1&sample=1" 400                           #/etc/passwd.IMG
+test_fail "?url=file%3A%2F%2F%2Fetc%2Fpasswd.IMG&line=1&sample=1" 400              #file:///etc/passwd.IMG
+test_fail "?url=$PWD/test/$f&line=1&sample=1" 400                                  #exists at this absolute path
+test_fail "?url=file://$PWD/test/$f&line=1&sample=1" 400                           #exists at this absolute path
+
 #SSRF filter: image URLs on non-public hosts are rejected with 400
 #URLs are percent encoded, also [] would otherwise be interpreted by curl as globs
 test_fail "?url=http%3A%2F%2Flocalhost%3A8080%2Fx.IMG&line=1&sample=1" 400  #http://localhost:8080/x.IMG

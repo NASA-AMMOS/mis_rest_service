@@ -79,7 +79,13 @@ All requests must specify an RDR file to query with a parameter like `url=SRC` w
 * `file://PATH`
 * `PATH`.
 
-If `REGION` is included and differs from the region of the AWS credentials (see below) the query will likely fail.  `..` is disallowed in `KEY` and `PATH`.
+If `REGION` is included and differs from the region of the AWS credentials (see below) the query will likely fail.
+
+`..` is disallowed in `KEY` and `PATH`.
+
+`http[s]://PATH` URLs must not resolve to a loopback, private, link local, or other non-public address, including after redirects.
+
+For the REST service `PATH` must also be relative to `fs_input_dir`, and `http[s]://PATH` URLs must match `rdr_url_whitelist_patterns` (see below).
 
 # Building
 
@@ -222,8 +228,8 @@ Note on default values: the defaults described here refer to the defaults in the
 * `debug_sampler`: Defaults to false.  Set to `true` to enable extra logging.
 * `enable_s3`: Must be `true` or `false`.  Defaults to `true`.  Enables reading from S3.
 * `enable_http`: Must be `true`, `false`, or `auto`.  Defaults to `true`.  Enables reading inputs from http[s] URLs. 
-* `rdr_url_whitelist_patterns`: Defaults to empty, meaning allow all.  Comma separated list of URL regex to whitelist RDR URLs.  If this is empty no whitelist is applied, but the `enable_s3` and `enable_http` settings are still respected.  This whitelist is for security and cannot be disabled.
-* `fs_input_dir`: optional content root for filesystem input images.  Applies only to REST service.  Empty or null disables filesystem input for REST service (command line interface will still allow local paths).
+* `rdr_url_whitelist_patterns`: Defaults to empty, which disables http[s] URLs but allows all S3 URLs and filesystem paths.  Comma separated list of regex to whitelist URLs and filesystem paths.  If not empty, every input URL or path must fully match at least one pattern.  Patterns should include the / after the host, e.g. `https://data\.example\.com/.*`, not `https://data\.example\.com.*` which would match `https://data.example.com.evil.net/x`.  This whitelist is for security and cannot be disabled by request parameters.  Example to allow from a single http[s] host, all `s3://` URLs, and all relative local file paths (no colon) with or without `file://`: `https?://allow\.from\.com/.*,s3://.*,file://[^:]*,[^:]*`.
+* `fs_input_dir`: optional content root for filesystem input images.  Applies only to REST service.  Local filesystem access is disabled if this is null or empty.  Filesystem input paths, including `file://` URLs, are resolved relative to this; absolute paths (e.g. starting with `/` or `file:///`) are rejected.  The command line interface still allows local paths, including absolute paths.
 * `mission`: one of `MSL`, `M20`, `M2020`, or `CADRE`.  Defaults to `M20`.  Used to determine the format for parsing input filenames as mission product IDs when `rdr=TYPE` is absent.
 * `aws_profile`: Defaults to `null`.  AWS credentials profile name if not using credentials from `X-AWS` request header.  Use `null` for the [default credential provider chain](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/credentials-chain.html).
 * `aws_region`: Defaults to `us-gov-west-1`.  AWS region name.  Use `null` for to use the [default region provider chain](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/region-selection.html).

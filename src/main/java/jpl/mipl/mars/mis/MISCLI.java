@@ -130,6 +130,8 @@ public class MISCLI {
                 return;
             }
 
+            MISParams.trustedInput = true; //the CLI user is trusted, see MISParams.checkUrl()
+
             MISTask.quiet = commandLine.hasOption(quietOption.getOpt());
             MISTask.debug = !MISTask.quiet && commandLine.hasOption(debugOption.getOpt());
             if (MISTask.debug) {
